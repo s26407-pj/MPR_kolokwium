@@ -34,6 +34,8 @@ public class AccountService {
     }
 
     public void transferIn(int id, int amount) {
+        Status status = null;
+
         List<Account> accountList = accountStorage.getAccountList();
 
         for (Account account : accountList) {
@@ -43,6 +45,7 @@ public class AccountService {
                 int newBalance = balance + amount;
 
                 account.setBalance(newBalance);
+                status = Status.ACCEPTED;
 
                 System.out.println("Konto o ID = " + id + " zostało zasilone kwotą: " + amount);
                 System.out.println("Klient: " + account.getUser().getUserName() + ", aktualny stan konta: " + account.getBalance());
@@ -52,6 +55,8 @@ public class AccountService {
     }
 
     public void transferOut(int id, int amount) {
+        Status status = null;
+
         List<Account> accountList = accountStorage.getAccountList();
 
         for (Account account : accountList) {
@@ -62,8 +67,10 @@ public class AccountService {
 
                 if (newBalance < 0) {
                     System.out.println("Nie można wykonać przelewu. Niewystarczająca ilość środków.");
+                    status = Status.DECLINED;
                 } else {
                     account.setBalance(newBalance);
+                    status = Status.ACCEPTED;
 
                     System.out.println("Z konta o ID = " + id + " został wykonany przelew na kwotę: " + amount);
                     System.out.println("Klient: " + account.getUser().getUserName() + ", aktualny stan konta: " + account.getBalance());

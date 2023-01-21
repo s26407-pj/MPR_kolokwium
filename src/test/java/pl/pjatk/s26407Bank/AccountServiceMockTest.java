@@ -34,7 +34,7 @@ public class AccountServiceMockTest {
 
         when(accountService.transferOut(4, 1000));
 
-        assertThat(account).isNull();
+        assertThat(id).isNull();
 
     }
 
